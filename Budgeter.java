@@ -4,8 +4,9 @@
 // TA: Jun Song
 // Assignment #4
 //
-// This program helps practicing writing if/else statements, for loops,
-// scanner, and specifying types of number while minding parameter and scope.
+// This program takes in users income and expense amounts then helps calculating the 
+// total income and expense per month and per day. In the end, the program announced
+// whether the user has saved or spent more than they earn with a specific amount. 
 
 import java.util.*;
 
@@ -103,7 +104,7 @@ public class Budgeter {
             System.out.println("You're a saver.");
          }
       }
-      System.out.println("Save money, don't do drugs. Thank you for using HoaLe's program!");
+      System.out.println("Save money, don't do drugs. Thank you for using my program!");
       return net;
    }
    
