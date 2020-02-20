@@ -7,27 +7,71 @@ public class Midterm_practice {
       Random r = new Random();
       Scanner console = new Scanner(System.in);
       
-      trackInvestment(console, 100.0, 5);
+      Ant1(r);
+      
    }
    
-// NOTE - TRACKING PREV VALUE IN LOOP
-// https://stackoverflow.com/questions/60219762/compare-previous-random-variable-to-a-current-random-variable-inside-a-while/60219779?noredirect=1#comment106517032_60219779
-public static int noBigger(int max, Random rand) {
-   System.out.println("Picking numbers from 1 to " + max);
-   int num = rand.nextInt(max) + 1;
-   System.out.println("Number: " + num);
-   int last = num;int count = 1;
-   while (num <= last) {
-      double prob = (double)num / max;
-      System.out.println("Probability to continue: " + prob);
-      last = num;
-      num = rand.nextInt(max) + 1;
+      
+    public static void Ant1 (Random r) {
+       int fall = 0;
+       int target = 6;
+       int prev = r.nextInt(7);
+       int step = prev;
+       System.out.print("Steps: " + step);
+       while (step < target) {
+         prev = step;
+         step = r.nextInt(7);
+         System.out.print(", " + step);
+         if (prev > step) {
+           fall++;
+         }
+         
+      }
+      System.out.println();
+      System.out.println("number of falls: " + fall);
+   }
+   
+   // WRONG - Midterm Practice Question - stockMarket (Scanner) - return Double
+   public static double stockMarket (Scanner console) {
+      double priceIncrease = 0.0;
+      
+      System.out.print("How many stocks? ");
+      int stock = console.nextInt();
+      
+      System.out.print("How many days? ");
+      int day = console.nextInt();
+      
+      for (int i = 1; i <= stock; i++) {
+         System.out.print("Stock " + i + ": ");
+         for (int j = 1; j <= day; j++) {
+            double price = console.nextDouble();
+            
+         }
+      }
+      return priceIncrease;
+   }
+   
+   
+   // NOTE - TRACKING PREV VALUE IN LOOP
+   // https://stackoverflow.com/questions/60219762/compare-previous-random-variable-to-a-current-random-variable-inside-a-while/60219779?noredirect=1#comment106517032_60219779
+   public static int noBigger(int max, Random r) {
+      System.out.println("Picking numbers from 1 to " + max);
+      int num = r.nextInt(max) + 1;
       System.out.println("Number: " + num);
-      count++;
-    }
-    System.out.println("Streak ends");
-    return count;
-}
+      int last = num;
+      int count = 1;
+      while (num <= last) {
+         double prob = (double)num / max;
+         System.out.println("Probability to continue: " + prob);
+         last = num;
+         num = r.nextInt(max) + 1;
+         System.out.println("Number: " + num);
+         count++;
+       }
+       System.out.println("Streak ends");
+       return count;
+   }
+   
    // https://courses.cs.washington.edu/courses/cse142/20wi/exams/midterm/sample-midterm.pdf
    // Problem 8
    public static void trackInvestment (Scanner console, double ivm, int year) {
@@ -47,7 +91,7 @@ public static int noBigger(int max, Random rand) {
    } 
    
    // HARD
-   // Midterm Practice Question - printSequenceT0(double)
+   // Midterm Practice Question - printSequenceTo(double)
    public static int printSequenceTo(double target) {
       int n = 1;
       double sum = 0.5;
@@ -59,6 +103,32 @@ public static int noBigger(int max, Random rand) {
       }
       System.out.println(" = " + sum);
       return n;
+   }
+   
+   // Midterm Practice Question - findValentins(Random, int)
+   public static void findValentines (Random r, int n) {
+      System.out.println("Will you be mind Valentine?");
+      int yes = 0;
+      int answer = r.nextInt(2);
+         if (answer == 0) {
+            System.out.print("yes");
+            yes++;
+         } else {
+            System.out.print("no" );
+         }
+      for (int i = 1; i < n; i++) {
+         answer = r.nextInt(2);
+         if (answer == 0) {
+            System.out.print(", yes");
+            yes++;
+         } else {
+            System.out.print(", no" );
+         }
+      }
+      double pct = yes * 100.0/ n;
+      System.out.println();
+      System.out.println(yes + " yesses, " + pct + "%");
+      
    }
    
    // Midterm Practice Question - maxSevens (Random, int)
@@ -103,6 +173,7 @@ public static int noBigger(int max, Random rand) {
       }
       System.out.println("number of falls: " + slip);
    }
+
    
    // Midterm Practice Question - areReversals(String, String)
    public static boolean areReversals (String a, String b) {
