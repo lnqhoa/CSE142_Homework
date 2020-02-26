@@ -112,13 +112,13 @@ public class YazInterpreter {
       while (token.hasNext()) {
          // Seperate the string that starts with \" and end with \"
          String str = token.next();
-         str = 
+         str = str.replace("\"", "");
+         str = str.replace("_", " ");
          int num = token.nextInt();
          for (int i = 1; i <= num; i++) {
             System.out.print(str);
          }      
       }
+      System.out.println();
    }
-   
-
 }
