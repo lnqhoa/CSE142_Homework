@@ -1,3 +1,10 @@
+// Hoa N Le
+// WIN 2020/02/19
+// CSE 142 Intro to Java
+// TA: Jun Song
+// Assignment #6
+//
+// This program 
 import java.util.*;
 import java.io.*;
 
@@ -14,18 +21,15 @@ public class YazInterpreter {
              !answer.toLowerCase().equals("q")) {
                answer = prompt(console);
              }
-      
-      // Answer is a case sensitive veersion of "Q"
-      if (answer.toLowerCase().equals("q")) {
-         System.out.println();
-      }
+             
       // Answer is a case sensitive veersion of "C"
       if (answer.toLowerCase().equals("c")) {
          System.out.println("YazInteractions session. Type END to exit.");
       }
       
-      // Answer is a case-insensitive version of "C" or "I"
-      while (answer.toLowerCase().equals("c") || answer.toLowerCase().equals("i")) {
+      // Answer is a case-insensitive version of "C" 
+      while (answer.toLowerCase().equals("c") || answer.toLowerCase().equals("i") ||
+            answer.toLowerCase().equals("q")) {
          if (answer.toLowerCase().equals("c")) {
             String function = console.nextLine();
             // Use convert(String value) function to convert temp
@@ -45,10 +49,12 @@ public class YazInterpreter {
                      System.out.println();
                      prompt(console);
             }                    
-         } else { // Answer is a case-insensitive version of "I" 
+         } else if (answer.toLowerCase().equals("i")) { // Answer is a case-insensitive version of "I" 
             System.out.println();
             prompt(console);          
-         } 
+         } else {
+            answer = "";
+         }
       }      
    }
    
