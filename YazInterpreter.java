@@ -4,7 +4,13 @@
 // TA: Jun Song
 // Assignment #6
 //
-// This program 
+// This program will prompt user for one among three options:
+// A YZL console, interpret a YZL program from a file, or quit.
+// It can convert temparatures between Celcius and Fahrenheit.
+// It can also print a new sequence using three different arguments.
+// It can also print out a new string argument with the repeated times 
+// indicated by an arbitrary number.
+
 import java.util.*;
 import java.io.*;
 
@@ -36,11 +42,11 @@ public class YazInterpreter {
             if (function.toLowerCase().startsWith("convert")) {
                convert(function);
             } 
-            // User range() function
+            // User range(String value) function
             else if (function.toLowerCase().startsWith("range")) {
                range(function);
             } 
-            // Use repeat() function
+            // Use repeat(String value) function
             else if (function.toLowerCase().startsWith("repeat")) {
                repeat(function);
             } 
@@ -50,8 +56,8 @@ public class YazInterpreter {
                      prompt(console);
             }                    
          } else if (answer.toLowerCase().equals("i")) { // Answer is a case-insensitive version of "I" 
-            System.out.println();
-            prompt(console);          
+            interpret(console);
+            prompt(console);         
          } else {
             answer = "";
          }
@@ -84,8 +90,7 @@ public class YazInterpreter {
       // Get the temperature that needs to be converted
       int temp = token.nextInt();
       // Current unit of temperature
-      String type = token.next();
-      type = type.toLowerCase();
+      String type = token.next().toLowerCase();
       if (type.equals("f")) {
          temp_convert = (int) Math.round((temp - 32)/1.8); 
          System.out.println(temp_convert + "C");
@@ -132,4 +137,41 @@ public class YazInterpreter {
       }
       System.out.println();
    }
+   
+   // Method use to get file and interpret the file
+   public static void interpret (Scanner console) throws FileNotFoundException {
+      // Prompt user for input file's name
+      System.out.print("Input file name: ");
+      String name_input = console.next();
+      File file_input = new File(name_input);
+      while(!file_input.exists() && !name_input.contains(".yzy")) {
+         System.out.print("File not found. Try again: ");
+         name_input = console.next();
+         file_input = new File(name_input);
+      }
+      // Prompt user for output file's name
+      System.out.print("Output file name: ");
+      String name_output = console.next();
+      PrintStream file_output = new PrintStream(new File(name_output));
+      System.out.println("YazLang program interpreted and output to .txt file!");
+      System.out.println();
+   }
+   
+   public static void readFile (___the file input here____) { // parameter taking in the file
+      // Setting up new Scanner to scan the file
+      Scanner input = new Scanner (file_input);
+      while (input.hasNext()) {
+         String value = input.nextLine().toLowerCase();
+         if (value.startsWith("convert")) {
+            convert(value);
+         } else if (value.startsWith("range")) {
+            range(value);
+         } else if (value.startsWith("repeat")) {
+            repeat(value);
+         }
+      }
+      System.out.println();   
+   } 
+   
+   
 }
