@@ -15,11 +15,16 @@ public class YazInterpreter {
                answer = prompt(console);
              }
       
+      // Answer is a case sensitive veersion of "Q"
+      if (answer.toLowerCase().equals("q")) {
+         System.out.println();
+      }
+      // Answer is a case sensitive veersion of "C"
       if (answer.toLowerCase().equals("c")) {
          System.out.println("YazInteractions session. Type END to exit.");
       }
       
-      // Answer is a case-insensitive version of "C" 
+      // Answer is a case-insensitive version of "C" or "I"
       while (answer.toLowerCase().equals("c") || answer.toLowerCase().equals("i")) {
          if (answer.toLowerCase().equals("c")) {
             String function = console.nextLine();
