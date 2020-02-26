@@ -139,7 +139,7 @@ public class YazInterpreter {
    }
    
    // Method use to get file and interpret the file
-   public static void interpret (Scanner console) throws FileNotFoundException {
+   public static String interpret (Scanner console) throws FileNotFoundException {
       // Prompt user for input file's name
       System.out.print("Input file name: ");
       String name_input = console.next();
@@ -155,9 +155,11 @@ public class YazInterpreter {
       PrintStream file_output = new PrintStream(new File(name_output));
       System.out.println("YazLang program interpreted and output to .txt file!");
       System.out.println();
+      return name_input;
    }
    
-   public static void readFile (___the file input here____) { // parameter taking in the file
+   
+   public static void readFile (String file_input) { // parameter taking in the file
       // Setting up new Scanner to scan the file
       Scanner input = new Scanner (file_input);
       while (input.hasNext()) {
