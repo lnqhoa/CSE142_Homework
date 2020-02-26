@@ -15,28 +15,28 @@ import java.util.*;
 import java.io.*;
 
 public class YazInterpreter {
-   public static void main(String[]args) throws FileNotFoundException {
-      intro();
+   public static void main(String[]args) throws FileNotFoundException { 
       Scanner console = new Scanner(System.in);
       
-      // Prompting users for the function they want to use
+      intro();
       String answer = prompt(console);
       
       // Answer is not a case-insensitive version of "C", "I" or "Q"
-      while (!answer.toLowerCase().equals("c") && !answer.toLowerCase().equals("i") &&
-             !answer.toLowerCase().equals("q")) {
+      while (!answer.equalsIgnoreCase("c") && !answer.equalsIgnoreCase("i") &&
+             !answer.equalsIgnoreCase("q")) {
                answer = prompt(console);
              }
              
       // Answer is a case sensitive veersion of "C"
-      if (answer.toLowerCase().equals("c")) {
+      if (answer.equalsIgnoreCase("c")) {
          System.out.println("YazInteractions session. Type END to exit.");
       }
       
-      // Answer is a case-insensitive version of "C" 
-      while (answer.toLowerCase().equals("c") || answer.toLowerCase().equals("i") ||
-            answer.toLowerCase().equals("q")) {
-         if (answer.toLowerCase().equals("c")) {
+      // Answer is a case-insensitive version of "C", "I" or "Q" 
+      while (answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("i") ||
+             answer.equalsIgnoreCase("q")) {
+         // Answer is a case-insensitive version of "C"
+         if (answer.equalsIgnoreCase("c")) {
             String function = console.nextLine();
             // Use convert(String value) function to convert temp
             if (function.toLowerCase().startsWith("convert")) {
@@ -53,12 +53,13 @@ public class YazInterpreter {
             // Reprompt the user with prompt(Scanner console) function
             else if (function.toLowerCase().startsWith("end")) {
                      System.out.println();
-                     prompt(console);
-            }                    
-         } else if (answer.toLowerCase().equals("i")) { // Answer is a case-insensitive version of "I" 
-            interpret(console);
-            prompt(console);         
-         } else {
+                     answer = prompt(console);
+            }
+         // Answer is a case-insensitive version of "I"                        
+         } else if (answer.equalsIgnoreCase("i")) { 
+            String file_input = interpret(console);
+            answer = prompt(console);         
+         } else { // Answer is a case-insensitive version of "Q" 
             answer = "";
          }
       }      
@@ -66,11 +67,11 @@ public class YazInterpreter {
    
    // Introduction
    public static void intro() {
-    System.out.println("Welcome to the YazInterpreter!");
-    System.out.println("You may interpret a YazLang program and output");
-    System.out.println("the results to a .txt file or enter console YazInteractions");
-    System.out.println("mode to run single commands of YazLang.");
-    System.out.println();   
+      System.out.println("Welcome to the YazInterpreter!");
+      System.out.println("You may interpret a YazLang program and output");
+      System.out.println("the results to a .txt file or enter console YazInteractions");
+      System.out.println("mode to run single commands of YazLang.");
+      System.out.println();   
    }
    
    // User Prompt for "C", "I" or "Q"
@@ -103,7 +104,7 @@ public class YazInterpreter {
    
    // Method that print a sequence of numbers
    // until arg 1 + arg 3 >= arg 2 
-   public static void range (String value) {
+   public static String range (String value) {
       // Setting up new Scanner to read the User-input string
       Scanner token = new Scanner(value);
       // Take out the word "RANGE"
@@ -112,30 +113,36 @@ public class YazInterpreter {
       int arg_1 = token.nextInt();
       int arg_2 = token.nextInt();
       int arg_3 = token.nextInt();
+      String str_range = arg_1 + " ";
       while (arg_1 < arg_2) {
-         System.out.print(arg_1 + " ");
+         System.out.print(str_range);
          arg_1 += arg_3;
+         str_range = arg_1 + " ";
       }
       System.out.println();
+      return str_range;
    }
 
    // Method that print out string argument repeated 
    // number of times indicated by following interger
-   public static void repeat (String value) {
+   public static String repeat (String value) {
       // Setting up new Scanner to read the User-input string
       Scanner token = new Scanner(value);
       String fnc = token.next();
+      String str = "";
       while (token.hasNext()) {
          // Seperate the string that starts with \" and end with \"
-         String str = token.next();
+         str = token.next();
          str = str.replace("\"", "");
          str = str.replace("_", " ");
          int num = token.nextInt();
          for (int i = 1; i <= num; i++) {
+            // str = str + ... + str (number of num);
             System.out.print(str);
          }      
       }
       System.out.println();
+      return str;
    }
    
    // Method use to get file and interpret the file
@@ -149,31 +156,31 @@ public class YazInterpreter {
          name_input = console.next();
          file_input = new File(name_input);
       }
-      // Prompt user for output file's name
-      System.out.print("Output file name: ");
-      String name_output = console.next();
-      PrintStream file_output = new PrintStream(new File(name_output));
-      System.out.println("YazLang program interpreted and output to .txt file!");
-      System.out.println();
+      readFile(console, name_input);
       return name_input;
-   }
+   }   
    
-   
-   public static void readFile (String file_input) { // parameter taking in the file
+   public static void readFile (Scanner console, String file_input) throws FileNotFoundException {
       // Setting up new Scanner to scan the file
       Scanner input = new Scanner (file_input);
+       // Prompt user for output file's name
+      System.out.print("Output file name: ");
+      String name_output = console.next();
+      
+      PrintStream file_output = new PrintStream(new File(name_output));
+      
+      System.out.println("YazLang program interpreted and output to .txt file!");
+      System.out.println();
       while (input.hasNext()) {
          String value = input.nextLine().toLowerCase();
          if (value.startsWith("convert")) {
-            convert(value);
+            int convert_temp = convert(value);
+            file_output.println(convert_temp);
          } else if (value.startsWith("range")) {
             range(value);
          } else if (value.startsWith("repeat")) {
             repeat(value);
          }
       }
-      System.out.println();   
-   } 
-   
-   
+   }     
 }
