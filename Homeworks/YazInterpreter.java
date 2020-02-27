@@ -14,6 +14,7 @@
 import java.util.*;
 import java.io.*;
 
+
 public class YazInterpreter {
    public static void main(String[]args) throws FileNotFoundException {
       // Setting up Scanner and output file
@@ -35,30 +36,12 @@ public class YazInterpreter {
       }
       
       // Answer is a case-insensitive version of "C" 
-      while (answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("i") ||
-            answer.equalsIgnoreCase("q")) {
+      while (!answer.equalsIgnoreCase("q")) {
          if (answer.equalsIgnoreCase("c")) {
             String function = console.nextLine();
-            // Use convert(String value) function to convert temp
-            if (function.toLowerCase().startsWith("convert")) {
-               int temp = convert(function);
-               String f_c = temp_type(function);
-               f_c = f_c.toUpperCase();
-               System.out.println(temp + f_c);
-            } 
-            // User range(String value) function
-            else if (function.toLowerCase().startsWith("range")) {
-               String result = range(function);
-               System.out.println(result);
-            } 
-            // Use repeat(String value) function
-            else if (function.toLowerCase().startsWith("repeat")) {
-               String new_str = repeat(function);
-               System.out.println(new_str);
-            } 
-            // Reprompt the user with prompt(Scanner console) function
-            else if (function.toLowerCase().startsWith("end")) {
-               System.out.println();
+            String result = if_else(function);
+            System.out.println(result);
+            if (function.equalsIgnoreCase("end")) {
                answer = prompt(console);
             }
          // Answer is a case-insensitive version of "I"                    
@@ -69,8 +52,10 @@ public class YazInterpreter {
             answer = prompt(console);         
          } else if (answer.equalsIgnoreCase("q")) {
             answer = "";
-         } 
-      }      
+         } else {
+            answer = prompt(console);
+         }
+      }           
    }
 
    // Introduction
@@ -137,13 +122,13 @@ public class YazInterpreter {
       int arg_1 = token.nextInt();
       int arg_2 = token.nextInt();
       int arg_3 = token.nextInt();
-      String str = "";
+      String result = "";
       
       while (arg_1 < arg_2) {
-         str += arg_1 + " ";
+         result += arg_1 + " ";
          arg_1 += arg_3;
       }
-      return str;
+      return result;
    }
 
    // Method that print out string argument repeated 
@@ -152,7 +137,7 @@ public class YazInterpreter {
       // Setting up new Scanner to read the User-input string
       Scanner token = new Scanner(input);
       String fnc = token.next();
-      String b = "";
+      String result = "";
       while (token.hasNext()) {
          // Seperate the string that starts with \" and end with \"
          String str = token.next();
@@ -161,10 +146,10 @@ public class YazInterpreter {
          str = str.replace("_", " ");
          int num = token.nextInt();
          for (int i = 1; i <= num; i++) {
-            b += str;
+            result += str;
          }     
       }
-      return b;
+      return result;
    }
 
    // Method use to get file and interpret the file
@@ -173,7 +158,7 @@ public class YazInterpreter {
       System.out.print("Input file name: ");
       String name_input = console.nextLine();
       File file_input = new File(name_input);
-      while(!file_input.exists() && !name_input.contains(".yzy")) {
+      while(!file_input.exists()) {
          System.out.print("File not found. Try again: ");
          name_input = console.nextLine();
          file_input = new File(name_input);
@@ -193,19 +178,27 @@ public class YazInterpreter {
       System.out.println("YazLang program interpreted and output to .txt file!");
       // Print results into .txt file
       while (input.hasNext()) {
-         String value = input.nextLine().toLowerCase();
-         if (value.startsWith("convert")) {
-            int new_temp = convert(value);
-            String f_c = temp_type(value);
-            f_c = f_c.toUpperCase();
-            file_output.println(new_temp + f_c);
-         } else if (value.startsWith("range")) {
-            String new_str = range(value);
-            file_output.println(new_str);
-         } else if (value.startsWith("repeat")) {
-            String new_repeat = repeat(value);
-            file_output.println(new_repeat);
-         }
+         String function = input.nextLine();
+         String result = if_else(function);
+         file_output.println(result);
       }
+   }
+   
+   // If/else statement answer equals to Convert/Range/Repeat
+   public static String if_else (String answer) {
+      Scanner input = new Scanner(answer);
+      String function = input.next();
+      String result = "";
+      if (function.equalsIgnoreCase("convert")) {
+         int new_temp = convert(answer);
+         String f_c = temp_type(answer);
+         f_c = f_c.toUpperCase();
+         result = new_temp + "" + f_c;
+      } else if (function.equalsIgnoreCase("range")) {
+        result = range(answer);
+      } else if (function.equalsIgnoreCase("repeat")) {
+        result = repeat(answer);
+      }
+      return result;   
    }    
 }
