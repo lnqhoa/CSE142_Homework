@@ -10,12 +10,7 @@ public class Testing {
       
       // 01.30.2020
       Scanner input = new Scanner(System.in);
-      // PROBLEM 7
-      //System.out.print("X coordinate? ");
-      //double x = input.nextDouble();
-      //System.out.print("Y coordinate? ");
-      //double y = input.nextDouble();
-      //quadrant(x, y);
+   
       
    }
    
@@ -70,6 +65,7 @@ public class Testing {
 // HW #4 Budgeter
 
 public static double results() {
+      double income = 0;
       if (totalIncome > totalExpense) {
          System.out.println("You earned $___ more than you spent this month.");
          System.out.println("You're a big saver.");
@@ -80,4 +76,5 @@ public static double results() {
       
       }
       System.out.println("Thank you for using my application!");
+      return income;
    }
