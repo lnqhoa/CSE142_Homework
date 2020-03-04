@@ -1,18 +1,7 @@
-// Hoa N Le
-// WIN 2020/03/03
-// CSE 142 Intro to Java
-// TA: Jun Song
-// Assignment #7
-//
-// This program will provide answers to the Kersey Temperament Sorter test.
-// It will take in two user' inputs - names of an input and an output files.
-// It coverts 70 answers of As, Bs or -s into a sequence of 4 displaying
-// B answers' percentage and returns the personality type. 
-
 import java.io.*;
 import java.util.*;
 
-public class Personality {
+public class assignment7_test0 {
 
    public static final int ARR_LENGTH = 4;   
 
