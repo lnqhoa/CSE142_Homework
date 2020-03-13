@@ -23,12 +23,6 @@ public class YazInterpreter {
       intro();
       // Prompting users for the function they want to use
       String answer = prompt(console);
-      
-      // Answer is not a case-insensitive version of "C", "I" or "Q"
-      while (!answer.equalsIgnoreCase("c") && !answer.equalsIgnoreCase("i") &&
-             !answer.equalsIgnoreCase("q")) {
-               answer = prompt(console);
-             }
              
       // Answer is a case sensitive veersion of "C"
       if (answer.equalsIgnoreCase("c")) {
